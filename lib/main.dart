@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Question.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -51,11 +53,26 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
+
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  int _questionNumber = 0;
+  final List<Question> _questions = [
+    Question(
+      question: 'What is the highest mountain in the world?',
+      responses: const ['K2', 'Mount Everest', 'Kangchenjunga', 'Lhotse'],
+    ),
+    Question(
+      question: 'What is the capital of Japan?',
+      responses: const ['Kyoto', 'Osaka', 'Tokyo', 'Yokohama'],
+    ),
+    Question(
+      question: 'What is the speed of light?',
+      responses: const ['299,792,458 m / s', '300,000,000 m / s', '100,000,000 m / s', '1,000,000,000 m / s'],
+    ),
+  ];
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -104,11 +121,20 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('You have pushed the button this many TIMES:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Text(_questions[_questionNumber].question),
+          // Text(
+          //    '$_counter',
+          //    style: Theme.of(context).textTheme.headlineMedium,
+          //  ),
+           ListView.builder(itemCount: _questions[_questionNumber].responses.length,
+           itemBuilder: (context, index) {
+             return ListTile(
+               title: Text(_questions[_questionNumber].responses[index]),
+               leading: FlutterLogo(size: 56.0),
+               // Customize other properties of the ListTile or create different widget types
+             );
+           },
+           ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
             children: [
