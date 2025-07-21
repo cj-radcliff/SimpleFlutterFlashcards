@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'Question.dart';
@@ -59,18 +61,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   int _questionNumber = 0;
+  int _score = 0;
   final List<Question> _questions = [
     Question(
       question: 'What is the highest mountain in the world?',
       responses: const ['K2', 'Mount Everest', 'Kangchenjunga', 'Lhotse'],
+      correctResponse: 1,
     ),
     Question(
       question: 'What is the capital of Japan?',
       responses: const ['Kyoto', 'Osaka', 'Tokyo', 'Yokohama'],
+      correctResponse: 2,
     ),
     Question(
       question: 'What is the speed of light?',
       responses: const ['299,792,458 m / s', '300,000,000 m / s', '100,000,000 m / s', '1,000,000,000 m / s'],
+      correctResponse:0
     ),
   ];
   void _incrementCounter() {
@@ -121,34 +127,45 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(_questions[_questionNumber].question),
+            Text(_questions[_questionNumber].question, style: TextStyle(fontSize:30),),
           // Text(
           //    '$_counter',
           //    style: Theme.of(context).textTheme.headlineMedium,
           //  ),
-           ListView.builder(itemCount: _questions[_questionNumber].responses.length,
+           Expanded(child: ListView.builder(itemCount: _questions[_questionNumber].responses.length,
+             prototypeItem: ListTile(title: Text(_questions.first.responses.first, style:TextStyle(fontSize:30))),
            itemBuilder: (context, index) {
              return ListTile(
                title: Text(_questions[_questionNumber].responses[index]),
-               leading: FlutterLogo(size: 56.0),
+               leading: Icon(Icons.question_mark, size: 16.0),
+               shape:  BeveledRectangleBorder(side:BorderSide()),
+               onTap: () {
+                 var theCorrectResponse = _questions[_questionNumber].correctResponse;
+                 if(index == theCorrectResponse) {
+                   print("right!");
+                   _score++;
+                 }
+                 else {
+                   print("wrong!");
+                 }
+                 setState(() {
+                   _questionNumber++;
+
+                 });
+
+               }
+
                // Customize other properties of the ListTile or create different widget types
              );
-           },
+             },
+             padding: const EdgeInsets.all(8),
+
+           )
            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-              onPressed: _decrementCounter,
-              icon: const Icon(Icons.heart_broken),
-
-
-            ),
-            IconButton(
-              onPressed: _incrementCounter,
-              icon: const Icon(Icons.rocket),
-
-            ),]
+              Text("Score: $_score"),]
             )
           ],
         ),
