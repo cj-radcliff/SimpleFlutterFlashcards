@@ -1,0 +1,10 @@
+To Do
+
+
+Done
+- Randomize the order of the answers for each question
+- Extract the list of questions from the code to a file, formatted as json, called questions.json
+- Read list of questions from questions.json
+- Make the list of questions 100 questions long in questions.json
+- Make the number of questions that the quiz asks 20
+- Randomize from the list of questions to make a new quiz each time
