@@ -1,8 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter2/splash_screen.dart';
 
-import 'Question.dart';
+import 'package:flutter2/questions_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,137 +35,9 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const SplashScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  
-  int _questionNumber = 0;
-  int _score = 0;
-  final List<Question> _questions = [
-    Question(
-      question: 'What is the highest mountain in the world?',
-      responses: const ['K2', 'Mount Everest', 'Kangchenjunga', 'Lhotse'],
-      correctResponse: 1,
-    ),
-    Question(
-      question: 'What is the capital of Japan?',
-      responses: const ['Kyoto', 'Osaka', 'Tokyo', 'Yokohama'],
-      correctResponse: 2,
-    ),
-    Question(
-      question: 'What is the speed of light?',
-      responses: const ['299,792,458 m / s', '300,000,000 m / s', '100,000,000 m / s', '1,000,000,000 m / s'],
-      correctResponse:0
-    ),
-  ];
-  
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(_questions[_questionNumber].question, style: TextStyle(fontSize:30),),
-          // Text(
-          //    '$_counter',
-          //    style: Theme.of(context).textTheme.headlineMedium,
-          //  ),
-           Expanded(child: ListView.builder(itemCount: _questions[_questionNumber].responses.length,
-             prototypeItem: ListTile(title: Text(_questions.first.responses.first, style:TextStyle(fontSize:30))),
-           itemBuilder: (context, index) {
-             return ListTile(
-               title: Text(_questions[_questionNumber].responses[index]),
-               leading: Icon(Icons.question_mark, size: 16.0),
-               shape:  BeveledRectangleBorder(side:BorderSide()),
-               onTap: () {
-                 var theCorrectResponse = _questions[_questionNumber].correctResponse;
-                 if(index == theCorrectResponse) {
-                   print("right!");
-                   _score++;
-                 }
-                 else {
-                   print("wrong!");
-                 }
-                 setState(() {
-                   _questionNumber++;
-
-                 });
-
-               }
-
-               // Customize other properties of the ListTile or create different widget types
-             );
-             },
-             padding: const EdgeInsets.all(8),
-
-           )
-           ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Score: $_score"),]
-            )
-          ],
-        ),
-      ),
-      
-
-    );
-  }
-
-  
-}
