@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter2/main.dart';
+import 'package:flutter2/questions_page.dart';
 
 class ResultsScreen extends StatelessWidget {
   final int score;
@@ -36,7 +36,7 @@ class ResultsScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+                    builder: (context) => const QuestionsPage(title: 'Flutter Flashcards'),
                   ),
                 );
               },
