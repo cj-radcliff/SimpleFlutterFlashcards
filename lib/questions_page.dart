@@ -30,8 +30,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
     final String response = await rootBundle.loadString('questions.json');
     final data = await json.decode(response);
     setState(() {
-      _questions = (data as List).map((i) => Question.fromMap(i)).toList()..shuffle();
-      _questions = _questions.sublist(0,20);
+      _questions = ((data as List).map((i) => Question.fromMap(i)).toList()..shuffle()).sublist(0, 20);
       _isLoading = false;
     });
   }
