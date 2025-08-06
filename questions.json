@@ -296,7 +296,7 @@
     "correctResponse": 3
   },
   {
-    question": "What year did Albrecht Dürer create the painting "The Young Hare"?",
+    "question": "What year did Albrecht Dürer create the painting \"The Young Hare\"?",
     "responses": [
       "1702",
       "1402",

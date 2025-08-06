@@ -1,9 +1,11 @@
+import 'package:flutter_driver/driver_extension.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter2/splash_screen.dart';
 
-import 'package:flutter2/questions_page.dart';
 
 void main() {
+  enableFlutterDriverExtension();
   runApp(const MyApp());
 }
 

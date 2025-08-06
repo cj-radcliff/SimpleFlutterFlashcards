@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Question.dart';
@@ -22,9 +23,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
   bool _isLoading = true;
   final AudioPlayer _audioPlayer = AudioPlayer(); // Create an AudioPlayer instance
 
+  late ConfettiController _confettiController;
+
   @override
   void initState() {
     super.initState();
+    _confettiController = ConfettiController(duration: const Duration(seconds: 1));
     _loadQuestions();
   }
 
@@ -52,6 +56,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
   @override
   void dispose() {
     _audioPlayer.dispose(); // Dispose the player when the widget is disposed
+    _confettiController.dispose();
     super.dispose();
   }
   @override
@@ -68,10 +73,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, left: 12.0, right: 12.0, top: 12.0),
               child: Text(
@@ -102,32 +109,36 @@ class _QuestionsPageState extends State<QuestionsPage> {
                       elevation: 2,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(16),
-                        onTap: () {
+                        splashColor: Colors.deepPurpleAccent.withOpacity(0.3),
+                        onTap: () async {
                           var theCorrectResponse =
                               _questions[_questionNumber].correctResponse;
                           if (index == theCorrectResponse) {
                             print("right!");
                             _playSound('yay.mp3'); // Play correct sound
                             _score++;
+                            _confettiController.play();
                           } else {
                             print("wrong!");
                             _playSound('aww.mp3'); // Play incorrect sound
-
                           }
+                          await Future.delayed(const Duration(seconds: 3));
                           if (_questionNumber < _questions.length - 1) {
                             setState(() {
                               _questionNumber++;
                             });
                           } else {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ResultsScreen(
-                                  score: _score,
-                                  totalQuestions: _questions.length,
+                            if (mounted) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ResultsScreen(
+                                    score: _score,
+                                    totalQuestions: _questions.length,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           }
                         },
                         child: ListTile(
@@ -135,12 +146,17 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           title: Text(
                             _questions[_questionNumber].responses[index],
                             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.left,
                           ),
                           leading: const Icon(Icons.question_mark, size: 24.0, color: Colors.deepPurple),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
                           contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                          minVerticalPadding: 0,
+                          isThreeLine: false,
+                          dense: false,
+                          visualDensity: VisualDensity(vertical: 0),
                         ),
                       ),
                     ),
@@ -156,6 +172,22 @@ class _QuestionsPageState extends State<QuestionsPage> {
           ],
         ),
       ),
-    );
+      // Confetti widget overlay
+      Align(
+        alignment: Alignment.topCenter,
+        child: ConfettiWidget(
+          confettiController: _confettiController,
+          blastDirectionality: BlastDirectionality.explosive,
+          shouldLoop: false,
+          colors: const [Colors.deepPurple, Colors.purple, Colors.deepPurpleAccent, Colors.purpleAccent],
+          emissionFrequency: 0.2,
+          numberOfParticles: 20,
+          maxBlastForce: 20,
+          minBlastForce: 8,
+        ),
+      ),
+    ],
+  ),
+);
   }
 }
