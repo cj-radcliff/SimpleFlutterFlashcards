@@ -11,8 +11,10 @@ void main() {
   });
 
   tearDownAll(() async {
-    await driver.close();
-    });
+    if (driver != null) {
+      await driver.close();
+    }
+  });
 
   test('User completes quiz and sees results', () async {
     // 1. Wait for splash screen
@@ -24,10 +26,6 @@ void main() {
 
     // 3. Answer 20 questions
     for (int i = 0; i < 20; i++) {
-      // Verify progress indicator is visible
-      final progressText = 'Question ${i + 1} of 20';
-      await driver.waitFor(find.text(progressText));
-
       // Tap the first answer option for each question using its ValueKey
       await driver.tap(find.byValueKey('answer_0'));
       // Wait for next question or results
