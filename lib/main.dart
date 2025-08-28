@@ -1,11 +1,7 @@
-import 'package:flutter_driver/driver_extension.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter2/splash_screen.dart';
-
+import 'splash_screen.dart';
 
 void main() {
-  enableFlutterDriverExtension();
   runApp(const MyApp());
 }
 

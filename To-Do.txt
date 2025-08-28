@@ -2,3 +2,11 @@ To Do
 
 Done
 - Extract question loading to a separate class
+- rename question_loader.dart to file_question_loader.dart
+- create an abstract interface for question_loader
+- provide another loader that utilizes the question loader interface to call an API. The api currently resides at http://localhost and has the following URI: /getQuizQuestions. This api call has one parameter, "numberOfQuestions", which should default to 20 for now.
+- create a unit test which mocks the network question loader.
+- Print the current version of dart.
+- Print the current version of flutter.
+- Add menu to the start page. This menu should just have the ability to start a new quiz or exit the application.
+- Add a settings page to the application, with a button to reach it from the main page (just under) start quiz. The settings page should have one field to choose the host of the quiz server. This quiz server should be updated in the api_question_loader.dart file.

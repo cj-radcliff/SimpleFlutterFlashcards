@@ -33,4 +33,4 @@ A new Flutter project.
 - *Follow the official [Effective Dart](https://dart.dev/effective-dart) guidelines.*
 - *Use `flutter_lints` for code analysis.*
 - *Keep code well-documented.*
-- *Use To-Do.txt to track work needed. In the file there are two lists, 'To Do' and 'Done'. When a task is completed, move from 'To Do' to 'Done'
+- *Use To-Do.txt to track work needed. In the file there are two lists, 'To Do' and 'Done'. When a task is completed, move from 'To Do' to 'Done'. Do only one item on 'To Do' at a time, stopping to let me test each time*

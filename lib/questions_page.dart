@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Question.dart';
-import 'question_loader.dart';
+import 'file_question_loader.dart';
 import 'results_screen.dart';
 
 class QuestionsPage extends StatefulWidget {
@@ -17,6 +17,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
   int _questionNumber = 0;
   int _score = 0;
   late final List<Question> _questions;
+  final _questionLoader = FileQuestionLoader();
   bool _isLoading = true;
 
   @override
@@ -26,7 +27,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
   }
 
   Future<void> _loadQuestions() async {
-    final List<Question> loadedQuestions = await QuestionLoader.loadQuestions();
+    final List<Question> loadedQuestions = await _questionLoader.loadQuestions(numberOfQuestions: 20);
     setState(() {
       _questions = (loadedQuestions..shuffle()).sublist(0, 20);
       _isLoading = false;

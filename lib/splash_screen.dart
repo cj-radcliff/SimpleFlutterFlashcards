@@ -1,32 +1,48 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:flutter2/questions_page.dart';
+import 'package:flutter/services.dart';
+import 'questions_page.dart';
+import 'settings_page.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds: 3),
-      () => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const QuestionsPage(title: 'Flutter Flashcards')),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset('assets/images/splash.png'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.asset('assets/images/splash.png'),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const QuestionsPage(title: 'Flutter Flashcards')),
+                );
+              },
+              child: const Text('Start Quiz'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
+                );
+              },
+              child: const Text('Settings'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+              child: const Text('Exit'),
+            ),
+          ],
+        ),
       ),
     );
   }
