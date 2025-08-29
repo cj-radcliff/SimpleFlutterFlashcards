@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../lib/api_question_loader.dart';
-import '../lib/question.dart';
+import 'package:flutter2/api_question_loader.dart';
+import 'package:flutter2/question.dart';
 
 void main() {
   group('ApiQuestionLoader', () {
@@ -29,9 +28,8 @@ void main() {
 
       var loadQuestions = loader.loadQuestions(numberOfQuestions: 1);
       var loadQuestions2 = await loadQuestions;
-      var loadQuestions2Type = loadQuestions2.runtimeType;
-      
-      print(loadQuestions2.runtimeType);
+
+      print(loadQuestions2 is List<Question>);
 
 
       expect(loadQuestions2, isA<List<Question>>());
