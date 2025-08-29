@@ -1,22 +1,22 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Question.dart';
 import 'question_loader.dart';
 
 class ApiQuestionLoader implements QuestionLoader {
-  final http.Client client;
+  final Dio dio;
 
-  ApiQuestionLoader(this.client);
+  ApiQuestionLoader(this.dio);
 
   @override
   Future<List<Question>> loadQuestions({int numberOfQuestions = 20}) async {
     final prefs = await SharedPreferences.getInstance();
     final host = prefs.getString('host') ?? 'http://localhost:8080';
-    final response = await client.get(Uri.parse('$host/getQuizQuestions?numberOfQuestions=$numberOfQuestions'));
+    final response = await dio.get('$host/getQuizQuestions', queryParameters: {'numberOfQuestions': numberOfQuestions});
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+      final data = response.data;
       return (data as List).map((i) => Question.fromMap(i)).toList();
     } else {
       throw Exception('Failed to load questions');
