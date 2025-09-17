@@ -11,10 +11,8 @@ void main() {
   });
 
   tearDownAll(() async {
-    if (driver != null) {
-      await driver.close();
-    }
-  });
+    await driver.close();
+    });
 
   test('User completes quiz and sees results', () async {
     // 1. Wait for splash screen

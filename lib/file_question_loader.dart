@@ -8,6 +8,8 @@ class FileQuestionLoader implements QuestionLoader {
   Future<List<Question>> loadQuestions({int numberOfQuestions = 20}) async {
     final String response = await rootBundle.loadString('questions.json');
     final data = await json.decode(response);
-    return (data as List).map((i) => Question.fromMap(i)).toList();
+    final List<Question> allQuestions = (data as List).map((i) => Question.fromMap(i)).toList();
+    allQuestions.shuffle();
+    return allQuestions.take(numberOfQuestions).toList();
   }
 }

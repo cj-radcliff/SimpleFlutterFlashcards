@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter2/api_question_loader.dart';
-import 'package:flutter2/question.dart';
 
 void main() {
   testWidgets('ApiQuestionLoader loads questions from a json file', (WidgetTester tester) async {

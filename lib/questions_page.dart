@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'question.dart';
 import 'api_question_loader.dart';
 import 'results_screen.dart';
@@ -73,10 +72,10 @@ class _QuestionsPageState extends State<QuestionsPage> {
                         var theCorrectResponse =
                             _questions[_questionNumber].correctResponse;
                         if (index == theCorrectResponse) {
-                          print("right!");
+                      //    print("right!");
                           _score++;
                         } else {
-                          print("wrong!");
+                       //   print("wrong!");
                         }
                         if (_questionNumber < _questions.length - 1) {
                           setState(() {
