@@ -27,6 +27,14 @@ class Question {
         responses = (map['responses'] as List<dynamic>).map((response) => response as String).toList(),
         correctResponse = map['correctResponse'] as int;
 
+  Map<String, dynamic> toMap() {
+    return {
+      'question': question,
+      'responses': responses,
+      'correctResponse': correctResponse,
+    };
+  }
+
   /// Creates a copy of the current Question instance
   /// with updated values.
   Question copyWith({

@@ -3,7 +3,7 @@ import 'splash_screen.dart';
 import 'package:flutter_driver/driver_extension.dart';
 
 void main() {
-  enableFlutterDriverExtension();
+  //enableFlutterDriverExtension();
   runApp(const MyApp());
 }
 
