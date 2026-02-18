@@ -4,7 +4,7 @@ on:
   pull_request:
     # Restricts the agent to specific testing branches or main
     branches:
-      - 'main'
+      # - 'main'
       - 'ai-test/**'
       - 'experimental-agent'
     # Trigger on opening a PR or pushing new code to an existing one
