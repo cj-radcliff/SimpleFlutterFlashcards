@@ -2,7 +2,6 @@ import os
 import json
 import sys
 from github import Auth, Github
-from google import genai
 
 from google.genai import Client
 
