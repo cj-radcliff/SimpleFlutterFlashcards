@@ -34,7 +34,7 @@ def get_line_specific_review():
     print("🔍 Analyzing files to select standards...")
     comparison = repo.compare(pr.base.sha, pr.head.sha)
     
-is_flutter = any(f.filename.endswith('.dart') for f in comparison.files)
+    is_flutter = any(f.filename.endswith('.dart') for f in comparison.files)
     standards_path = "docs/ai-standards.md"
     
     print(f"📖 Loading standards from: {standards_path}")
