@@ -22,8 +22,7 @@ print(f"📦 Context: Reviewing PR #{PR_NUMBER}")
 try:
     genai.configure(api_key=GEMINI_API_KEY)
     gh = Github(GITHUB_TOKEN)
-    # Update this string to your actual repo path (e.g., "flutter/flutter-intellij")
-    repo = gh.get_repo("flutter/flutter-intellij") 
+    # Update this string to your actual repo path     repo = gh.get_repo("cj-radcliff/SimpleFlutterFlashcards")    
     pr = repo.get_pull(PR_NUMBER)
     print(f"✅ Connected to Repo: {repo.full_name}")
 except Exception as e:
@@ -36,7 +35,7 @@ def get_line_specific_review():
     comparison = repo.compare(pr.base.sha, pr.head.sha)
     
     is_flutter = any(f.filename.endswith('.dart') for f in comparison.files)
-    standards_path = "docs/ai-flutter-standards.md" if is_flutter else "docs/ai-standards.md"
+    standards_path = "docs/ai-standards.md"
     
     print(f"📖 Loading standards from: {standards_path}")
     with open(standards_path, "r") as f:
