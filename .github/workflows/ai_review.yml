@@ -1,5 +1,8 @@
 name: AI PR Reviewer
-
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
 on:
   pull_request:
     # Restricts the agent to specific testing branches or main
