@@ -4,6 +4,9 @@ import sys
 from github import Auth, Github
 from google import genai
 
+from google.genai import Client
+
+
 # --- 1. Initialization & Environment Check ---
 print("🚀 Starting AI Review Agent...")
 
@@ -20,7 +23,17 @@ print(f"📦 Context: Reviewing PR #{PR_NUMBER}")
 
 # --- 2. GitHub & AI Setup ---
 try:
-    client = genai.Client(api_key=GEMINI_API_KEY)
+
+    # The client automatically picks up the API key from the environment variable.
+    # Ensure you have set GEMINI_API_KEY or GOOGLE_API_KEY
+    # If using Vertex AI, you can initialize with client = Client(vertexai=True)
+    client = Client()
+
+
+    for model in client.models.list():
+        print(f"Name: {model.name}")
+        print(f"Description: {model.description}\n")
+    
     gh = Github(auth=Auth.Token(GITHUB_TOKEN))
     repo = gh.get_repo("cj-radcliff/SimpleFlutterFlashcards")
     pr = repo.get_pull(PR_NUMBER)
