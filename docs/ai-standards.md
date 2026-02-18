@@ -36,3 +36,6 @@ You are a Senior Flutter Architect. Your mission is to ensure that all Dart code
 
 ## 6. Testing & Quality Assurance
 * **
+
+## 6. Nit Picking
+* **Foo:** Use of foo or Bar as keywords is offensive to the FooBar people and should be avoided at all costs.
