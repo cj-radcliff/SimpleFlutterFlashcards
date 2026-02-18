@@ -68,7 +68,7 @@ def get_line_specific_review():
     """
 
     print("🤖 Sending request to Gemini...")
-    model = genai.GenerativeModel('gemini-1.5-pro')
+    model = genai.GenerativeModel('gemini-3-pro')
     response = model.generate_content(prompt)
     print("✨ Received response from Gemini.")
     return response.text, latest_commit
