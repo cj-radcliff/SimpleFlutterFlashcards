@@ -49,4 +49,4 @@ jobs:
         run: |
           # Use the input PR number if triggered manually, otherwise use the event context
           PR_NUM=${{ github.event.inputs.pr_number || github.event.pull_request.number }}
-          python scripts/ai_reviewer/review_agent.py $PR_NUM
+          python scripts/ai_reviewer/review-agent.py $PR_NUM
