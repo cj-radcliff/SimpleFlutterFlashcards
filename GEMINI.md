@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A new Flutter project.
+This is a flashcard app written in Flutter. It uses a back end to get the data for the flash cards. The server is in https://github.com/cj-radcliff/simple-quiz-backend.git, also written in Dart.
 
 ## Tech Stack
 
