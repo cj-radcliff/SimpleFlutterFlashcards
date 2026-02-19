@@ -1,5 +1,8 @@
 name: AI PR Reviewer
-
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
 on:
   pull_request:
     # Restricts the agent to specific testing branches or main
@@ -39,7 +42,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install PyGithub google-generativeai
+          pip install PyGithub google-genai
+
 
       - name: Run Review Agent
         env:
@@ -49,4 +53,4 @@ jobs:
         run: |
           # Use the input PR number if triggered manually, otherwise use the event context
           PR_NUM=${{ github.event.inputs.pr_number || github.event.pull_request.number }}
-          python scripts/ai_reviewer/review_agent.py $PR_NUM
+          python scripts/ai_reviewer/review-agent.py $PR_NUM

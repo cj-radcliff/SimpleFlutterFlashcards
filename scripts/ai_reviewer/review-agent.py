@@ -1,8 +1,10 @@
 import os
 import json
 import sys
-from github import Github
-import google.generativeai as genai
+from github import Auth, Github
+
+from google.genai import Client
+
 
 # --- 1. Initialization & Environment Check ---
 print("🚀 Starting AI Review Agent...")
@@ -20,10 +22,19 @@ print(f"📦 Context: Reviewing PR #{PR_NUMBER}")
 
 # --- 2. GitHub & AI Setup ---
 try:
-    genai.configure(api_key=GEMINI_API_KEY)
-    gh = Github(GITHUB_TOKEN)
-    # Update this string to your actual repo path (e.g., "flutter/flutter-intellij")
-    repo = gh.get_repo("flutter/flutter-intellij") 
+
+    # The client automatically picks up the API key from the environment variable.
+    # Ensure you have set GEMINI_API_KEY or GOOGLE_API_KEY
+    # If using Vertex AI, you can initialize with client = Client(vertexai=True)
+    client = Client()
+
+
+    for model in client.models.list():
+        print(f"Name: {model.name}")
+        print(f"Description: {model.description}\n")
+    
+    gh = Github(auth=Auth.Token(GITHUB_TOKEN))
+    repo = gh.get_repo("cj-radcliff/SimpleFlutterFlashcards")
     pr = repo.get_pull(PR_NUMBER)
     print(f"✅ Connected to Repo: {repo.full_name}")
 except Exception as e:
@@ -36,7 +47,7 @@ def get_line_specific_review():
     comparison = repo.compare(pr.base.sha, pr.head.sha)
     
     is_flutter = any(f.filename.endswith('.dart') for f in comparison.files)
-    standards_path = "docs/ai-flutter-standards.md" if is_flutter else "docs/ai-standards.md"
+    standards_path = "docs/ai-standards.md"
     
     print(f"📖 Loading standards from: {standards_path}")
     with open(standards_path, "r") as f:
@@ -68,8 +79,10 @@ def get_line_specific_review():
     """
 
     print("🤖 Sending request to Gemini...")
-    model = genai.GenerativeModel('gemini-1.5-pro')
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=prompt,
+    )
     print("✨ Received response from Gemini.")
     return response.text, latest_commit
 
@@ -102,7 +115,7 @@ def apply_feedback(raw_response, commit):
         if "READY_FOR_HUMAN_REVIEW" in raw_response:
             print("👤 Triggering handoff: Reassigning to human...")
             # REPLACE WITH YOUR ACTUAL GITHUB USERNAME
-            MY_USERNAME = "your-github-username" 
+            MY_USERNAME = "cj-radcliff" 
             pr.add_to_assignees(MY_USERNAME)
             pr.create_issue_comment(f"✅ AI Review complete. Reassigning to @{MY_USERNAME} for final review.")
 

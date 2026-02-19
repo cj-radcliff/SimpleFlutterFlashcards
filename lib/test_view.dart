@@ -4,6 +4,11 @@ class TestView extends StatefulWidget {
   // Violation 1: Missing 'const' on constructor for a stateless-style widget
   TestView({Key? key}) : super(key: key);
 
+  // stupid comment. okease delete
+  // todo
+
+  // some other commit
+  
   @override
   // ignore: library_private_types_in_public_api
   _TestViewState createState() => _TestViewState();
