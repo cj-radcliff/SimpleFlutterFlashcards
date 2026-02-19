@@ -35,5 +35,7 @@ class _TestViewState extends State<TestView> {
       ),
     );
   }
-}
+}  
+
+// a dummy comment
 
